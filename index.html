@@ -180,6 +180,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">222</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -219,7 +230,109 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="54qwd165qwd651qw65dw"><a href="#54qwd165qwd651qw65dw" class="headerlink" title="54qwd165qwd651qw65dw"></a>54qwd165qwd651qw65dw</h1>
+        <h1 id="AMD、CMD、CommonJS、ES6"><a href="#AMD、CMD、CommonJS、ES6" class="headerlink" title="AMD、CMD、CommonJS、ES6"></a>AMD、CMD、CommonJS、ES6</h1><h2 id="一、AMD"><a href="#一、AMD" class="headerlink" title="一、AMD"></a>一、AMD</h2><p><code>AMD，Asynchronous Module Definition, 异步模块定义</code>。它是一个在浏览器端模块化开发的规范。<br>它不是<code>javascript</code>原生支持，所以使用AMD规范进行页面开发需要用到对应的库，也就是<code>RequireJS</code>，AMD其实是<code>RequireJS</code>在推广的过程中对模块定义的范围化的产出。</p>
+<p><code>requireJS</code>主要解决两个问题：</p>
+<ul>
+<li>多个<code>js</code>文件存在依赖关系时，被依赖的文件需要早于依赖它的文件加载到浏览器</li>
+<li><code>js</code>加载的时候浏览器会阻塞渲染线程，加载文件越多，页面失去响应的时间越长</li>
+</ul>
+<p>用法：<br><code>require</code>需要一个<code>root</code>来作为搜索依赖的开始(类似<code>package.json</code>的<code>main</code>)，<code>data-main</code>来指定这个<code>root</code>。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"script/require.js"</span> <span class="attr">data-main</span>=<span class="string">"script/app.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这样就指定了<code>root</code>是<code>app.js</code>，只有直接或者间接与<code>app.js</code>有依赖关系的<code>module</code>才会被插入到<code>html</code>中。</p>
+<ul>
+<li><code>define()</code>函数：用来定义模块的函数。<code>args0</code>: 需引入模块的名字数组，<code>arg1</code>：依赖引入之后的<code>callback</code>，<code>callback</code>的参数就是引入的东西。如果有多个依赖，则参数按照引入的顺序依次传入。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">define([<span class="string">'dependence_name'</span>], (args) =&gt; &#123;</span><br><span class="line"><span class="comment">// args就是从dependence_name引入的东西</span></span><br><span class="line"><span class="comment">// ... Your fucking code ...</span></span><br><span class="line">   <span class="keyword">return</span> your_export;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>require()</code>函数： 用来引入模块的函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>([<span class="string">'import_module_name'</span>], (args) =&gt; &#123;</span><br><span class="line"><span class="comment">// args就是从import_module_name引入的东西</span></span><br><span class="line"><span class="comment">// ... Your fucking code ...</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>require.config</code>配置：</p>
+<ul>
+<li><code>baseUrl</code>:加载<code>module</code>的根路径</li>
+<li><code>paths</code>：用于映射不存在根路径下面的模块路径</li>
+<li><code>shimes</code>：加载非<code>AMD</code>规范的<code>js</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="二、CMD"><a href="#二、CMD" class="headerlink" title="二、CMD"></a>二、CMD</h2><p><code>CMD， Common Module Definition</code>， 通用模块定义。<br><code>CMD</code>是在<code>sea.js</code>推广的过程中产生的。在`CMD规范中，一个模块就是一个文件。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params">require, exprots, module</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);  <span class="comment">//接受模块标识作为唯一参数</span></span><br><span class="line">	<span class="comment">// exports，module则和CommonJS类似</span></span><br><span class="line">	exports.module = &#123;</span><br><span class="line">		props: <span class="string">'value'</span></span><br><span class="line">	&#125;;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">seajs.use([<span class="string">'test.js'</span>], <span class="function"><span class="keyword">function</span>(<span class="params">test_exports</span>) </span>&#123;</span><br><span class="line"><span class="comment">// ....</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>AMD</th>
+<th>CMD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>定义module时对依赖的处理</td>
+<td>推崇依赖前置，在定义的时候就要声明其依赖的模块</td>
+<td>推崇就近依赖，只有在用到这个module的时候才去require</td>
+</tr>
+<tr>
+<td>加载方式</td>
+<td>async</td>
+<td>async</td>
+</tr>
+<tr>
+<td>执行module的方式</td>
+<td>加载module完成后就会执行该module，所有module都加载执行完成后会进入require的回调函数，执行主逻辑。依赖的执行顺序和书写的顺序不一定一致，谁先下载完谁先执行，但是主逻辑 一定在所有的依赖加载完成后才执行(有点类似Promise.all)。</td>
+<td>加载完某个依赖后并不执行，只是下载而已。在所有的module加载完成后进入主逻辑，遇到require语句的时候才会执行对应的module。module的执行顺序和书写的顺序是完全一致的。</td>
+</tr>
+</tbody>
+</table>
+<p>### </p>
+<h2 id="三、CommonJS"><a href="#三、CommonJS" class="headerlink" title="三、CommonJS"></a>三、CommonJS</h2><p>English time： Common – 常识<br>W3C官方定义的API都只能基于Browser，而CommonJS则弥补了javascript这方面的不足。</p>
+<p><code>NodeJS</code>是<code>CommonJS</code>规范的主要实践者。它有四个重要的环境变量为模块化的实现提供支持：<code>module、exports、require、global</code>。<br>实际用时，使用<code>module.exports</code>(不推荐使用exports)定义对外输出的API，用<code>require</code>来引用模块。<code>CommonJS</code>用同步的方式加载模块。在<code>Server</code>上模块文件都在本地磁盘，所以读取非常快没什么不妥，但是在<code>Browser</code>由于网络的原因，更合理的方案是异步加载。<br><code>CommonJS</code>对模块的定义主要分为：<strong>模块引用、模块定义、模块标识</strong>3个部分。</p>
+<h3 id="1、模块引用："><a href="#1、模块引用：" class="headerlink" title="1、模块引用："></a>1、模块引用：</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br></pre></td></tr></table></figure>
+<p>require的执行步骤：</p>
+<ol>
+<li>如果是核心模块， 如fs，则直接返回模块</li>
+<li>如果是路径，则拼接成一个绝对路径，然后先读取缓存require.cache再读取文件。(如果没有扩展名，则以js =&gt; json =&gt; node(以二进制插件模块的方式去读取)的顺序去识别)</li>
+<li>首次加载后的模块会在require.cache中，所以多次require，得到的对象是同一个(引用的同一个对象)</li>
+<li><p>在执行模块代码的时候，会将模块包装成一下模式，以便于作用域在模块范围之内。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">exports, require, module, __filename, __dirname</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// module codes</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>包装之后的代码同过vm原生模块的runInThisContext()方法执行(类似eval，不过具有明确上下文不会污染环境)，返回一个function对象。<br>最后将当前模块对象的<code>exports</code>、<code>require</code>方法、<code>module</code>以及文件定位中得到的<code>完整文件路径</code>(包括文件名)和<code>文件目录</code>传递给这个function执行。</p>
+</li>
+</ol>
+<h3 id="2、模块定义："><a href="#2、模块定义：" class="headerlink" title="2、模块定义："></a>2、模块定义：</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">exports.propName = fn;</span><br><span class="line"><span class="built_in">module</span>.exports = fn;</span><br></pre></td></tr></table></figure>
+<p>一个<code>module</code>对象代表模块本身，<code>exports</code>是<code>module</code>的属性。一般通过在<code>exports</code>上挂载属性即可定义导出，也可以直接给<code>module.exports</code>赋值来定义导出(推荐)。</p>
+<h3 id="3、模块标识："><a href="#3、模块标识：" class="headerlink" title="3、模块标识："></a>3、模块标识：</h3><p>模块标识就是传递给<code>require()</code>方法的参数，可以是相对路径或者绝对路径，也可以是符合小驼峰命名的字符串。<br><code>NodeJS</code>中<code>CommonJS</code>的实现：<code>Node</code>中模块分为Node提供的<code>核心模块</code>和用户编写的<code>文件模块</code>。</p>
+<p><strong>核心模块</strong>在<code>Node</code>源代码的编译过程中，编译进了二进制执行文件。在<code>Node</code>启动的时候部分核心模块就加载到了<code>memory</code>中，所以在引用核心模块的时候，文件定位和编译执行步骤可以省略，并且在路径判断中优先判断，所以它的加载速度是最快的。<br><strong>文件模块</strong>则是在运行时动态加载，需要完整的路径分析，文件定位、编译执行等过程，速度较核心模块慢。<br>在<code>NodeJS</code>中引入模块需要经历如下3个步骤：</p>
+<ol>
+<li><p>路径分析：module.paths = [‘当前目录下的node_modules’, ‘父目录下的node_modules’, …， ‘跟目录下的node_modules’]</p>
+</li>
+<li><p>文件定位：<strong>文件扩展名分析、目录和包的处理</strong>。</p>
+<ul>
+<li>文件扩展名分析：<code>Node</code>会按<code>.js =&gt; .json =&gt; .node</code>的次序补足扩展名依次尝试。（在尝试的过程中会调用同步的fs模块来查看文件是否存在）</li>
+<li>目录和包的处理：可能没有对应的文件，但是存在相应的目录。这时<code>Node</code>会在此目录中查找<code>package.json</code>，并<code>JSON.parse</code>出<code>main</code>(入口文件)对应的文件。如果<code>main</code>属性错误或者没有<code>package.json</code>，则将<code>index</code>作为<code>main</code>。如果没有定位成功任何文件，则到下一个模块路径重复上述工作，如果整个<code>module.paths</code>都遍历完都没有找到目标文件，则跑出查找失败错误。</li>
+</ul>
+</li>
+<li><p>编译执行：在<code>Node</code>中每个模块文件都是一个对象，编译执行是引入文件模块的最后一个阶段。定位到文件后，<code>Node</code>会新建一个模块对象，然后根据路径载入并编译。对于不同的文件扩展名，其载入的方式也有所不同：</p>
+<ul>
+<li><code>.js</code>: 通过<code>fs</code>模块同步读取文件后编译执行</li>
+<li><code>.node</code>：这是<code>C++</code>编写的扩展文件，通过<code>dlopen()</code>加载最后编译生成的文件。</li>
+<li><code>.json</code>：同<code>.js</code>文件，之后用<code>JSON.parse</code>解析返回结果。<br>其余文件： 都按<code>js</code>的方式解析。</li>
+</ul>
+<p>| CommonJS | ES6<br>– | – | –<br>keywords | exports,   require, module, <strong>filename. </strong>dirname | import,   export<br>导入 | const   path = require(‘fs’);   必须将一个模块导出的所有属性都引入 | import   path from ‘path’;   可以只引入某个<br>导出 | module.exports   = App; | export   default App;<br>导入的对象 | 随意修改   值的copy | 不能随意修改   值的reference<br>导入次数 | 可以任意次require，除了第一次，之后的require都是从require.cache中取得 | 在头部导入，只能导入一次<br>加载 | 运行时加载 | 编译时输出接口</p>
+</li>
+</ol>
+<h2 id="ES6模块"><a href="#ES6模块" class="headerlink" title="ES6模块"></a>ES6模块</h2><p>ES6的模块已经比较熟悉了，用法不多赘述，直接上码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; prop &#125; <span class="keyword">from</span> <span class="string">'app'</span>;   <span class="comment">//从app中导入prop</span></span><br><span class="line"><span class="keyword">import</span> &#123; prop <span class="keyword">as</span> newProp &#125; <span class="keyword">from</span> <span class="string">'app'</span>;   <span class="comment">// 功能和上面一样，不过是将导入的prop重命名为newProp</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'App'</span>;   <span class="comment">// 导入App的default</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> App <span class="keyword">from</span> <span class="string">'App'</span>;  <span class="comment">// 导入App的所有属性到App对象中</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> variable = <span class="string">'value'</span>; <span class="comment">// 导出一个名为variable的常量</span></span><br><span class="line"><span class="keyword">export</span> &#123;variable <span class="keyword">as</span> newVar&#125;;   <span class="comment">// 和import 的重命名类似，将variable作为newVar导出</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> variable = <span class="string">'value'</span>;  <span class="comment">// 将variable作为默认导出</span></span><br><span class="line"><span class="keyword">export</span> &#123;variable <span class="keyword">as</span> <span class="keyword">default</span>&#125;;   <span class="comment">//  和上面的写法基本一样</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123;variable&#125; <span class="keyword">from</span> <span class="string">'module'</span>;  <span class="comment">// 导出module的variable ，该模块中无法访问</span></span><br><span class="line"><span class="keyword">export</span> &#123;variable <span class="keyword">as</span> newVar&#125; <span class="keyword">from</span> <span class="string">'module'</span>;  <span class="comment">// 下面的自己看  不解释了</span></span><br><span class="line"><span class="keyword">export</span> &#123;variable <span class="keyword">as</span> newVar&#125; <span class="keyword">from</span> <span class="string">'module'</span>;</span><br><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> <span class="string">'module'</span>;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>ps：ES6模块导入的变量(其实应该叫常量更准确)具有以下特点：<br>变量提升、相当于被<em>Object.freeze()</em>包装过一样、import/export只能在顶级作用域</p>
+</blockquote>
+<p><code>ES6</code>模块区别于<code>CommonJS</code>的运行时加载，<code>import</code> 命令会被<code>JavaScript</code>引擎静态分析，优先于模块内的其他内容执行(类似于函数声明优先于其他语句那样)， 也就是说在文件的任何位置<code>import</code>引入模块都会被提前到文件顶部。</p>
+<p><code>ES6</code>的模块 <strong>自动开启严格模式</strong>，即使没有写<code>&#39;use strict&#39;;</code> 。<br>运行一个包含<code>import</code>声明的模块时，被引入的模块先导入并加载，然后根据依赖关系，每个模块的内容会使用深度优先的原则进行遍历。跳过已经执行过的模块，避免依赖循环。</p>
+<p>okey~接下来老哥再看看(查查)<code>import</code>到底干啥了：<br>标准几乎没有谈到<code>import</code>该做什么，<code>ES6</code>将模块的加载细节完全交给了实现。<br>大致来说，<code>js</code>引擎运行一个模块的时候，其行为大致可归纳为以下四步：</p>
+<ol>
+<li>解析：engine去解析模块的代码，检查语法等。</li>
+<li>加载：递归加载所有被引入的模块，<strong>深度优先</strong>。</li>
+<li>链接：为每个新加载的模块创建一个作用域，并将模块中的声明绑入其中（包括从其他模块中引入的）。<br>当<code>js</code>引擎开始执行加载进来的模块中的代码的时候，<code>import</code>的处理过程已经完了，所以<code>js</code>引擎执行到一行<code>import</code>声明的时候什么也不会干。引入都是静态实现的，等到代码执行的时候就啥都不干了。</li>
+</ol>
+<h2 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h2><p><a href="https://juejin.im/post/5aaa37c8f265da23945f365c" target="_blank" rel="noopener">前端模块化：CommonJS,AMD,CMD,ES6</a><br><a href="https://juejin.im/entry/582ff966da2f600063f3f93f" target="_blank" rel="noopener">ES6 的模块系统</a><br><a href="https://baike.baidu.com/item/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BANode.js/12639161?fr=aladdin" target="_blank" rel="noopener">深入浅出NodeJS</a></p>
+
       
 
       
@@ -352,6 +465,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">222</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
